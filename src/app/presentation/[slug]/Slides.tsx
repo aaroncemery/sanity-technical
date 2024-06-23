@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 import { PortableTextBlock } from 'sanity';
-import { PortableText } from '@portabletext/react';
-import { urlForImage } from '../../../../sanity/lib/image';
+import { TitleSlide, Slide } from './Slide';
 import Image from 'next/image';
+import { urlForImage } from '../../../../sanity/lib/image';
+import { SanityImageAssetDocument } from 'next-sanity';
 
 type Slide = {
   title: string;
@@ -20,7 +21,13 @@ const components = {
   },
 };
 
-export const Slides = ({ slides }: { slides: any }) => {
+export const Slides = ({
+  slides,
+  brandLogo,
+}: {
+  slides: any;
+  brandLogo: SanityImageAssetDocument;
+}) => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const nextSlide = () => {
@@ -37,12 +44,6 @@ export const Slides = ({ slides }: { slides: any }) => {
 
   console.log(slides[currentSlide].image);
 
-  const imageUrl = urlForImage(slides[currentSlide].image);
-  const imageWidth = slides[currentSlide].image.width;
-  const imageHeight = slides[currentSlide].image.height;
-
-  console.log('imageUrl', imageUrl);
-
   return (
     <div className='grid grid-cols-5 gap-4 h-full w-full'>
       <div className='sidebar col-span-1 bg-white rounded-tr-lg rounded-br-lg'>
@@ -50,7 +51,7 @@ export const Slides = ({ slides }: { slides: any }) => {
           {slides.map((slide: any, index: number) => (
             <li
               key={slide.title}
-              className={`p-2 cursor-pointer rounded-md text-black transition-colors ${currentSlide === index ? 'bg-black text-white' : ''}`}
+              className={`p-2 cursor-pointer rounded-md text-black transition-colors ${currentSlide === index ? 'bg-black text-white' : ''} ${!slide.titleSlide ? 'pl-4' : 'font-semibold'}`}
               onClick={() => goToSlide(index)}
             >
               {slide.title}
@@ -59,30 +60,34 @@ export const Slides = ({ slides }: { slides: any }) => {
         </ul>
       </div>
       <div className='relative slide-container col-span-4'>
-        <div className='w-full h-full' key={slides[currentSlide].title}>
-          <h2>{slides[currentSlide].title}</h2>
-          <PortableText
-            value={slides[currentSlide].description}
-            components={components}
-          />
-          <Image
-            src={imageUrl}
-            alt={slides[currentSlide].image.alt}
-            width={slides[currentSlide].image.asset.width || 100}
-            height={slides[currentSlide].image.asset.height || 100}
-            priority
-          />
-          <div className='navigation absolute bottom-0 right-0 flex w-full justify-between pr-4'>
-            <button disabled={currentSlide === 0} onClick={prevSlide}>
-              Previous
-            </button>
-            <button
-              disabled={currentSlide === slides.length - 1}
-              onClick={nextSlide}
-            >
-              Next
-            </button>
-          </div>
+        <div
+          className='relative w-full h-full py-24 px-10'
+          key={slides[currentSlide].title}
+        >
+          {slides[currentSlide].titleSlide ? (
+            <TitleSlide slide={slides[currentSlide]} />
+          ) : (
+            <Slide slide={slides[currentSlide]} />
+          )}
+        </div>
+        <Image
+          src={urlForImage(brandLogo)}
+          alt={brandLogo.alt || 'Brand Logo'}
+          width={brandLogo.asset.width || 100}
+          height={brandLogo.asset.height || 100}
+          priority
+          className='absolute bottom-20 right-20'
+        />
+        <div className='navigation absolute bottom-4 right-1/2 translate-x-1/2 flex w-full justify-between pr-4 max-w-3xl mx-auto'>
+          <button disabled={currentSlide === 0} onClick={prevSlide}>
+            Previous
+          </button>
+          <button
+            disabled={currentSlide === slides.length - 1}
+            onClick={nextSlide}
+          >
+            Next
+          </button>
         </div>
       </div>
       <style jsx>{`

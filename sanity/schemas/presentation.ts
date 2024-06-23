@@ -30,6 +30,12 @@ export default defineType({
       },
     }),
     defineField({
+      name: 'brandLogo',
+      title: 'Brand Logo',
+      type: 'image',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'slides',
       title: 'Slides',
       type: 'array',
