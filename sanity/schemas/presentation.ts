@@ -1,10 +1,11 @@
 import { defineType, defineField } from 'sanity';
+import { Presentation } from 'lucide-react';
 
 export default defineType({
   name: 'presentation',
   title: 'Presentation',
   type: 'document',
-  icon: '🎥',
+  icon: 'Presentation',
   fields: [
     defineField({
       name: 'title',
