@@ -24,15 +24,9 @@ export default function RootLayout({
     <html lang='en'>
       <body className={inter.className}>
         {draftMode().isEnabled ? (
-          <PreviewProvider token={token || ''}>
-            <Nav />
-            {children}
-          </PreviewProvider>
+          <PreviewProvider token={token || ''}>{children}</PreviewProvider>
         ) : (
-          <>
-            <Nav />
-            {children}
-          </>
+          <>{children}</>
         )}
       </body>
     </html>

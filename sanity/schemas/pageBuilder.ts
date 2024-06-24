@@ -9,7 +9,7 @@ export default defineType({
       name: 'components',
       title: 'Components',
       type: 'array',
-      of: [{ type: 'hero' }],
+      of: [{ type: 'hero' }, { type: 'header' }],
       validation: (Rule) => Rule.required(),
     }),
   ],

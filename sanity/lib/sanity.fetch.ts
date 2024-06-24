@@ -29,8 +29,7 @@ export async function sanityFetch<QueryResponse>({
         perspective: 'previewDrafts',
       } satisfies QueryOptions)),
     next: {
-      revalidate: isDraftMode ? 0 : false,
-      tags,
+      revalidate: isDraftMode ? 0 : 60,
     },
   });
 }

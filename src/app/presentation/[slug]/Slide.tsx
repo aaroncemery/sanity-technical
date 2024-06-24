@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import { urlForImage } from '../../../../sanity/lib/image';
 import { PortableText } from '@portabletext/react';
-import { list } from 'postcss';
 
 const components = {
   block: {
@@ -23,6 +22,18 @@ const components = {
     code: ({ children }: any) => (
       <code className='text-sm font-mono'>{children}</code>
     ),
+    link: ({ children, value }: any) => {
+      const { href } = value;
+      return (
+        <a
+          href={href}
+          className='text-orange-400 font-semibold hover:underline hover:cursor-pointer'
+          target='_blank'
+        >
+          {children}
+        </a>
+      );
+    },
   },
   list: {
     bullet: ({ children }: any) => <ul className='mt-xl'>{children}</ul>,
