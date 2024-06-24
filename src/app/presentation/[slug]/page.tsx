@@ -1,7 +1,9 @@
 import { PortableTextBlock, SanityImageAssetDocument } from 'next-sanity';
-import { client } from '../../../../sanity/lib/client';
-import { PortableText } from '@portabletext/react';
-import { Slides } from './Slides';
+import { sanityFetch } from '../../../../sanity/lib/sanity.fetch';
+import Presentation, { query } from './Presentation';
+import { draftMode } from 'next/headers';
+import { LiveQuery } from 'next-sanity/preview/live-query';
+import PreviewPresentation from './PreviewPresentation';
 
 type Slide = {
   title: string;
@@ -10,7 +12,7 @@ type Slide = {
   titleSlide: boolean;
 };
 
-type Presentation = {
+type PresentationData = {
   _id: string;
   title: string;
   description: any;
@@ -26,26 +28,23 @@ const components = {
 };
 
 export default async function Page({ params }: { params: { slug: string } }) {
-  const presentation = await client.fetch<Presentation>(
-    `*[_type == "presentation" && slug.current == $slug][0] {
-        title,
-        description,
-        brandLogo,
-        slides,
-  }`,
-    {
+  const presentation = await sanityFetch<PresentationData>({
+    query: query,
+    params: {
       slug: params.slug,
-    }
-  );
+    },
+    tags: ['presentation'],
+  });
 
   return (
-    <div className='flex min-h-screen min-w-screen flex-col items-center justify-between bg-[#121923]'>
-      <div className='z-10 h-screen w-screen items-center justify-between font-mono text-sm'>
-        <Slides
-          slides={presentation.slides}
-          brandLogo={presentation.brandLogo}
-        />
-      </div>
-    </div>
+    <LiveQuery
+      enabled={draftMode().isEnabled}
+      query={query}
+      params={{ slug: params.slug }}
+      initialData={presentation}
+      as={PreviewPresentation}
+    >
+      <Presentation data={presentation} />
+    </LiveQuery>
   );
 }
