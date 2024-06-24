@@ -68,14 +68,16 @@ export const Slide = (props: any) => {
         <h2>{slide.title}</h2>
         <PortableText value={slide.description} components={components} />
       </div>
-      <Image
-        src={urlForImage(slide.image)}
-        alt={slide.image.alt || 'Image'}
-        width={slide.image.width || 750}
-        height={slide.image.height || 750}
-        className='object-contain rounded-lg col-span-2'
-        priority
-      />
+      {slide.image && (
+        <Image
+          src={urlForImage(slide.image)}
+          alt={slide.image.alt || 'Image'}
+          width={slide.image.width || 750}
+          height={slide.image.height || 750}
+          className='object-contain rounded-lg col-span-2'
+          priority
+        />
+      )}
     </div>
   );
 };

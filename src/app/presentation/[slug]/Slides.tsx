@@ -42,16 +42,14 @@ export const Slides = ({
     setCurrentSlide(index);
   };
 
-  console.log(slides[currentSlide].image);
-
   return (
-    <div className='grid grid-cols-5 gap-4 h-full w-full'>
+    <div className='grid grid-cols-5 gap-4 h-full w-full bg-[#121923]'>
       <div className='sidebar col-span-1 bg-white rounded-br-lg shadow-lg border-t border-gray-200'>
         <ul>
           {slides.map((slide: any, index: number) => (
             <li
               key={slide.title}
-              className={`p-2 cursor-pointer rounded-md text-black transition-colors ${currentSlide === index ? 'bg-black text-white' : ''} ${!slide.titleSlide ? 'pl-4' : 'font-semibold'}`}
+              className={`p-2 cursor-pointer rounded-md text-black transition-colors ${currentSlide === index ? 'bg-black text-white' : ''} ${!slide.titleSlide ? 'pl-4 text-sm' : 'font-semibold text-base'}`}
               onClick={() => goToSlide(index)}
             >
               {slide.title}
@@ -102,10 +100,10 @@ export const Slides = ({
           list-style-type: none;
           padding: 0;
         }
-        .slide-container {
+        /* .slide-container {
           flex-grow: 1;
           padding: 20px;
-        }
+        } */
         .slide {
           text-align: center;
         }
