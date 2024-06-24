@@ -14,7 +14,7 @@ type HomepageData = {
   pageBuilder: PageBuilder;
 };
 
-const query = `*[_type == $pageType && slug.current == $slug] {
+export const query = `*[_type == $pageType && slug.current == $slug] {
   pageBuilder {
     components[] {
       _type,

@@ -23,5 +23,5 @@ export async function GET(request: Request) {
 
   draftMode().enable();
 
-  redirect(`/${pageType}/${post.slug}`);
+  redirect(pageType === 'page' ? `/` : `/${pageType}/${post.slug}`);
 }

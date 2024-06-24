@@ -16,9 +16,18 @@ export const defaultDocumentNode: DefaultDocumentNodeResolver = (
   S,
   { schemaType }
 ) => {
-  // Only show preview pane on `movie` schema type documents
   switch (schemaType) {
     case `presentation`:
+      return S.document().views([
+        S.view.form(),
+        S.view
+          .component(Iframe)
+          .options({
+            url: (doc: SanityDocument) => getPreviewUrl(doc),
+          })
+          .title('Preview'),
+      ]);
+    case `page`:
       return S.document().views([
         S.view.form(),
         S.view
