@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^2.1.0",
+    "@heroicons/react": "^2.1.4",
     "@portabletext/react": "^3.1.0",
     "@sanity/image-url": "^1.0.2",
     "@sanity/vision": "^3.47.1",

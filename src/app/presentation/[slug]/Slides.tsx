@@ -46,7 +46,7 @@ export const Slides = ({
 
   return (
     <div className='grid grid-cols-5 gap-4 h-full w-full'>
-      <div className='sidebar col-span-1 bg-white rounded-tr-lg rounded-br-lg'>
+      <div className='sidebar col-span-1 bg-white rounded-br-lg shadow-lg border-t border-gray-200'>
         <ul>
           {slides.map((slide: any, index: number) => (
             <li

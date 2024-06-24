@@ -25,7 +25,7 @@ export const query = `*[_type == "presentation" && slug.current == $slug][0] {
 
 export default function Presentation({ data }: { data: Presentation }) {
   return (
-    <div className='flex min-h-screen min-w-screen flex-col items-center justify-between bg-[#121923]'>
+    <div className='flex h-[calc(100vh-80px)] min-w-screen flex-col items-center justify-between bg-[#121923] text-white mt-20'>
       <div className='z-10 h-screen w-screen items-center justify-between font-mono text-sm'>
         <Slides slides={data.slides} brandLogo={data.brandLogo} />
       </div>
